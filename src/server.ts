@@ -1,7 +1,10 @@
 import fastify from 'fastify'
 import { env } from './env'
+import { tasksRoutes } from './routes/tasks'
 
 const app = fastify()
+
+app.register(tasksRoutes)
 
 app
   .listen({
