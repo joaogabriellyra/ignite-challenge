@@ -1,8 +1,25 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import TaskService from '../services/tasks'
+import { createTaskBodySchema } from '../schemas/tasks'
+import { randomUUID } from 'crypto'
 
 export default class TaskController {
-  constructor(private taskService: TaskService) {}
+  private req: FastifyRequest
+  private reply: FastifyReply
+  private service: TaskService
+  constructor(req: FastifyRequest, reply: FastifyReply) {
+    this.req = req
+    this.reply = reply
+    this.service = new TaskService()
+  }
 
-  async createTask(req: FastifyRequest, reply: FastifyReply) {}
+  public async createTask() {
+    try {
+      const newTask = createTaskBodySchema.parse(this.req.body)
+      await this.service.createTask({ id: randomUUID(), ...newTask })
+      this.reply.status(201)
+    } catch (error) {
+      this.reply.status(500).send({ error })
+    }
+  }
 }
