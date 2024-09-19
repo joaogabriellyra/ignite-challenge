@@ -16,8 +16,11 @@ export default class TaskController {
   public async createTask() {
     try {
       const newTask = createTaskBodySchema.parse(this.req.body)
-      await this.service.createTask({ id: randomUUID(), ...newTask })
-      this.reply.status(201)
+      await this.service.create({
+        id: randomUUID(),
+        ...newTask,
+      })
+      this.reply.status(201).send()
     } catch (error) {
       this.reply.status(500).send({ error })
     }
