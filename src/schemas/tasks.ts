@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 export const createTaskBodySchema = z.object({
-  id: z.string(),
   title: z.string(),
   description: z.string(),
   completed_at: z.date(),
