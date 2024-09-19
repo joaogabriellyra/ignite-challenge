@@ -25,4 +25,13 @@ export default class TaskController {
       this.reply.status(500).send({ error })
     }
   }
+
+  public async getTasks() {
+    try {
+      const tasks = await this.service.getTasks()
+      this.reply.status(200).send(tasks)
+    } catch (error) {
+      this.reply.status(500).send({ error })
+    }
+  }
 }
