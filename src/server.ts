@@ -4,7 +4,9 @@ import { tasksRoutes } from './routes/tasks'
 
 const app = fastify()
 
-app.register(tasksRoutes)
+app.register(tasksRoutes, {
+  prefix: '/tasks',
+})
 
 app
   .listen({

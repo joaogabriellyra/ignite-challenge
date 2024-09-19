@@ -1,5 +1,8 @@
-import { FastifyInstance } from 'fastify'
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
+import TaskController from '../controllers/tasks'
 
 export async function tasksRoutes(app: FastifyInstance) {
-  app.post('/tasks', async () => {})
+  app.post('/', async (req: FastifyRequest, reply: FastifyReply) =>
+    new TaskController(req, reply).createTask(),
+  )
 }
