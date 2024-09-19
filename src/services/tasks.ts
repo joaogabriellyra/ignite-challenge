@@ -12,4 +12,14 @@ export default class TaskService {
   public async create(task: ITask): Promise<void> {
     await knex('tasks').insert(task)
   }
+
+  public async getTasks(): Promise<ITask[]> {
+    return await knex('tasks').select(
+      'title',
+      'description',
+      'completed_at',
+      'created_at',
+      'updated_at',
+    )
+  }
 }
