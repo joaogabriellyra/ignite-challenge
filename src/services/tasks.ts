@@ -34,4 +34,8 @@ export default class TaskService {
       updated_at: knex.fn.now(),
     })
   }
+
+  public async deleteTaskById(id: string): Promise<ITask> {
+    return await knex('tasks').where({ id }).del()
+  }
 }

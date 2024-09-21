@@ -61,11 +61,12 @@ export default class TaskController {
   public async deleteTask() {
     try {
       const { id } = idSchema.parse(this.req.params)
-      const deletedTask = await this.req.service.deleteTask(id)
+      console.log(id)
+      const deletedTask = await this.service.deleteTaskById(id)
       if (!deletedTask) {
         return this.reply.status(404).send({ message: 'Task not found' })
       }
-      return this.reply.status(204)
+      return this.reply.status(204).send()
     } catch (error) {
       this.reply.status(500).send({ error })
     }
