@@ -17,4 +17,8 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.delete('/:id', async (req: FastifyRequest, reply: FastifyReply) =>
     new TaskController(req, reply).deleteTask(),
   )
+
+  app.patch('/:id', async (req: FastifyRequest, reply: FastifyReply) =>
+    new TaskController(req, reply).completeTask(),
+  )
 }
