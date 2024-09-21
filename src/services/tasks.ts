@@ -14,13 +14,7 @@ export default class TaskService {
   }
 
   public async getTasks(): Promise<ITask[]> {
-    return await knex('tasks').select(
-      'title',
-      'description',
-      'completed_at',
-      'created_at',
-      'updated_at',
-    )
+    return await knex('tasks').select('*')
   }
 
   public async updateTaskById(
