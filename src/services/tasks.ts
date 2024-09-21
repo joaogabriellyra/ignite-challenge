@@ -22,4 +22,16 @@ export default class TaskService {
       'updated_at',
     )
   }
+
+  public async updateTaskById(
+    id: string,
+    title: string | undefined,
+    description: string | undefined,
+  ): Promise<ITask> {
+    return await knex('tasks').where({ id }).update({
+      title,
+      description,
+      updated_at: knex.fn.now(),
+    })
+  }
 }

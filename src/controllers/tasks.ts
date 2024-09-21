@@ -41,12 +41,18 @@ export default class TaskController {
 
   public async updateTask() {
     try {
-      const id = idSchema.parse(this.req.params)
-      const taskWithChanges = updateTaskBodySchema.parse(this.req.body)
-      const updatedTask = await this.service.updateTaskById(id, taskWithChanges)
-      if (!updateTaskBodySchema)
+      const { id } = idSchema.parse(this.req.params)
+      const { title, description } = updateTaskBodySchema.parse(this.req.body)
+
+      const updatedTask = await this.service.updateTaskById(
+        id,
+        title,
+        description,
+      )
+      if (!updatedTask) {
         return this.reply.status(404).send({ message: 'Task not found' })
-      this.reply.status(201).send(taskWithChanges)
+      }
+      this.reply.status(201).send(updatedTask)
     } catch (error) {
       this.reply.status(500).send({ error })
     }
