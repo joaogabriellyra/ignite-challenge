@@ -9,4 +9,8 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) =>
     new TaskController(req, reply).getTasks(),
   )
+
+  app.put('/:id', async (req: FastifyRequest, reply: FastifyReply) =>
+    new TaskController(req, reply).updateTask(),
+  )
 }

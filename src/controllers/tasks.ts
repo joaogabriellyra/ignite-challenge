@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import TaskService from '../services/tasks'
-import { createTaskBodySchema } from '../schemas/tasks'
+import {
+  createTaskBodySchema,
+  idSchema,
+  updateTaskBodySchema,
+} from '../schemas/tasks'
 import { randomUUID } from 'crypto'
 
 export default class TaskController {
@@ -30,6 +34,25 @@ export default class TaskController {
     try {
       const tasks = await this.service.getTasks()
       this.reply.status(200).send(tasks)
+    } catch (error) {
+      this.reply.status(500).send({ error })
+    }
+  }
+
+  public async updateTask() {
+    try {
+      const { id } = idSchema.parse(this.req.params)
+      const { title, description } = updateTaskBodySchema.parse(this.req.body)
+
+      const updatedTask = await this.service.updateTaskById(
+        id,
+        title,
+        description,
+      )
+      if (!updatedTask) {
+        return this.reply.status(404).send({ message: 'Task not found' })
+      }
+      this.reply.status(201).send(updatedTask)
     } catch (error) {
       this.reply.status(500).send({ error })
     }
