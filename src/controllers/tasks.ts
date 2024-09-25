@@ -74,8 +74,9 @@ export default class TaskController {
   public async completeTask() {
     try {
       const { id } = idSchema.parse(this.req.params)
-      const completedTask = await this.service.completeTaskById(id)
-      if (!completedTask) {
+      const [{ completed_at: completedAt }] =
+        await this.service.completeATaskById(id)
+      if (!completedAt) {
         return this.reply.status(404).send({ message: 'Task not found' })
       }
       return this.reply.status(204).send()
