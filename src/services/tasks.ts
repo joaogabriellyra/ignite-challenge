@@ -38,4 +38,20 @@ export default class TaskService {
   public async deleteTaskById(id: string): Promise<ITask> {
     return await knex('tasks').where({ id }).del()
   }
+
+  public async completeATaskById(id: string): Promise<ITask[]> {
+    return await knex('tasks')
+      .where({ id })
+      .update({
+        completed_at: knex.fn.now(),
+        updated_at: knex.fn.now(),
+      })
+      .returning([
+        'title',
+        'description',
+        'completed_at',
+        'created_at',
+        'updated_at',
+      ])
+  }
 }
