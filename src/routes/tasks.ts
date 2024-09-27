@@ -21,4 +21,8 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.patch('/:id/complete', async (req: FastifyRequest, reply: FastifyReply) =>
     new TaskController(req, reply).completeTask(),
   )
+
+  app.post('/csv', async (req: FastifyRequest, reply: FastifyReply) =>
+    new TaskController(req, reply).insertTaskUsingCSVFile(),
+  )
 }

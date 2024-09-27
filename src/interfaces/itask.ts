@@ -6,3 +6,8 @@ export default interface ITask {
   created_at?: Date
   updated_at?: Date
 }
+
+export interface ITaskCSV {
+  title: string
+  description: string
+}

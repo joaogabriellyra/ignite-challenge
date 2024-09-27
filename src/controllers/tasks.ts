@@ -6,6 +6,7 @@ import {
   updateTaskBodySchema,
 } from '../schemas/tasks'
 import { randomUUID } from 'crypto'
+import { csvReader } from '../utils/csvreader'
 
 export default class TaskController {
   private req: FastifyRequest
@@ -80,6 +81,25 @@ export default class TaskController {
         return this.reply.status(404).send({ message: 'Task not found' })
       }
       return this.reply.status(204).send()
+    } catch (error) {
+      this.reply.status(500).send({ error })
+    }
+  }
+
+  public async insertTaskUsingCSVFile() {
+    try {
+      const tasks = await csvReader()
+      if (tasks.length) {
+        tasks.forEach(async (task) => {
+          const newTask = createTaskBodySchema.parse(task)
+          await this.service.create({
+            id: randomUUID(),
+            ...newTask,
+          })
+        })
+        return this.reply.status(201).send()
+      }
+      return this.reply.status(404).send({ message: 'EMPTY CSV FILE' })
     } catch (error) {
       this.reply.status(500).send({ error })
     }
