@@ -7,7 +7,7 @@
     "dev": "tsx watch src/server.ts",
     "knex": "node --import tsx ./node_modules/.bin/knex",
     "lint": "eslint src --ext .ts --fix",
-    "build": "tsup src",
+    "build": "tsup src --out-dir build",
     "test": "vitest"
   },
   "author": "",
@@ -24,7 +24,6 @@
     "vitest": "^2.1.1"
   },
   "dependencies": {
-    "csv-parse": "^5.5.6",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "knex": "^3.1.0",
